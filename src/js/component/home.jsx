@@ -6,6 +6,7 @@ const TrafficLight = () => {
 
 	//crear variable useState
 	const [color, setColor] = useState("green");
+	const [isPurple, setIsPurple] = useState(false);
 
 	function alternateColor(){
 
@@ -17,24 +18,20 @@ const TrafficLight = () => {
 				setColor("green");	
 				break;
 			case "green":
+				if(isPurple){
+					setColor("purple") 
+				}else{
+					setColor("red");
+				}	
+				break;
+			case "purple":
 				setColor("red");
 				break;
-			default:
-				setColor("purple");
-				break;	
 		}
 	}
 
 	function addColor(){
-		let box = document.getElementsByClassName("box");
-		let light = document.createElement('div');
-		let buttonDisable = document.getElementsByTagName("button")[1];
-		buttonDisable.disabled = true;
-		light.className = "light lightPurple";
-		light.addEventListener("click", function(){
-			light.className = "light lightPurple purple";
-		})
-		box[0].appendChild(light);	
+		setIsPurple(true);
 	}
 
 	/*useEffect(()=>(
@@ -60,6 +57,12 @@ const TrafficLight = () => {
 						className={"light lightGreen " + ((color == "green")? "green": "")}>
 				
 				</div>
+				
+				{isPurple && (<div 	onClick={()=>setColor("purple")}
+						className={"light lightPurple " + ((color == "purple")? "purple": "")}>
+				
+				</div>)}
+				
 			</div>
 			
 			<div className="d-flex justify-content-center mt-5">
